@@ -16,9 +16,9 @@ function [] = main(path_side_info, path_groundtruth, ...
 %     BMVC, 2019
 %     https://arxiv.org/abs/1907.05380
 % 
-% Note: To ensure that the same image in the respectvie folders correspond 
+% Note: To ensure that the same image in the respective folders correspond 
 % to eachother, all the image names consist of the image number followed by the
-% type of image (e.g., GT, HR) whcih are then accessed in ascending order.
+% type of image (e.g., GT, HR) which are then accessed in ascending order.
 %
 % That post-processing step consists of solving a TV-TV minimization
 % problem
