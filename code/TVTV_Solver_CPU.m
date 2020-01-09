@@ -1,4 +1,4 @@
-function [x_opt, k] = TVTV_Solver(M, N, b, w_im, beta, arg1, arg2, varargin)
+function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, varargin)
 
 % Solves
 %                  minimize    Tv(x) + beta*TV(x - w_im)
