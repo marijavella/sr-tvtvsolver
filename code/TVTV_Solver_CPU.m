@@ -20,8 +20,8 @@ function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, scaling_f
 %               
 % Input:
 %   - M:    number of rows of the original image
-%   - N:    number of columns of the original image         (n = M*N)
-%   - b:    vector of measurements                                   (of size m)
+%   - N:    number of columns of the original image (n = M*N)
+%   - b:    vector of measurements (of size m)
 %   - w_im: n x 1 vector representing an image W_im: w_im = vec(W_im)
 %   - beta: positive number
 %   - arg1: a function handler
@@ -77,10 +77,6 @@ if length(w_im) ~= n  || beta < 0
     error('Input dimensions of TvplusTv do not agree. Type ''help TvplusTv'' for more information.');
 end
 
-if nargin > 9
-    error('There should be only one optional argument')
-end
-
     A  = @(x,scaling_factor,M,N) arg1(x, scaling_factor, M,N);
     AT = @(x,scaling_factor,M,N) arg2(x, scaling_factor, M,N);
 
@@ -101,7 +97,7 @@ eps_dual = 1e-3;
 % =========================================================================
 % Initializations and precomputations
 
-% vectors c_h and c_s defining the circulant matrices
+% vectors c_h and c_v defining the circulant matrices
 c_h  = zeros(n, 1);
 c_h(1)  = -1;
 c_h(n-M+1)  = 1;
