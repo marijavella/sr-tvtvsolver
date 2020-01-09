@@ -1,11 +1,11 @@
-function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, varargin)
+function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, scaling_factor)
 
 % Solves
 %                  minimize    Tv(x) + beta*TV(x - w_im)
 %                     x
 %                  subject to  b = A*x
 %
-% where TV(x) is the 2D total variation of a vectoriued version x of
+% where TV(x) is the 2D total variation of a vectorized version x of
 % an M x N matrix X (i.e., x = vec(X)), b : m x 1 is a vector of
 % measurements (b = A*x), beta > 0, and w_im is a vectorized image
 % similar to the image we want to reconstruct. We use ADMM to solve
@@ -25,13 +25,11 @@ function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, varargin)
 %   - w_im: n x 1 vector representing an image W_im: w_im = vec(W_im)
 %   - beta: positive number
 %   - arg1: a function handler
+%   - arg2: a function handler
 %
-% Optional Input: If there is any optional input, it is passed to the
-% function handlers; it may be used to implement the operations A*x
-% and AT*y.
 %
 % Outputs:
-%   - x_opt: solution of the abose optimiuation problem
+%   - x_opt: solution of the above optimization problem
 %   - k: number of ADMM iterations
 %
 % This code was designed and implemented by M. Vella to perform experiments 
@@ -44,7 +42,7 @@ function [x_opt, k] = TVTV_Solver_CPU(M, N, b, w_im, beta, arg1, arg2, varargin)
 %     2019
 %
 % Contributors:
-%     Marija vella
+%     Marija Vella
 %     Joao Mota
 %
 % =========================================================================
@@ -83,19 +81,14 @@ if nargin > 9
     error('There should be only one optional argument')
 end
 
-if isempty(varargin)
-    A  = arg1;
-    AT = arg2;
-else
-    A  = @(x,scaling_factor,M,N) arg1(x, varargin{1}, M,N);
-    AT = @(x,scaling_factor,M,N) arg2(x, varargin{1}, M,N);
-end
+    A  = @(x,scaling_factor,M,N) arg1(x, scaling_factor, M,N);
+    AT = @(x,scaling_factor,M,N) arg2(x, scaling_factor, M,N);
+
 
 % =========================================================================
 
 % =========================================================================
 % Parameters
-scaling_factor = varargin{1,1};
 MAX_ITER = 1700;
 rho  = 0.5;
 tau_rho  = 10;
