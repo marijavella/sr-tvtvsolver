@@ -236,6 +236,7 @@ for k = 1 : MAX_ITER
     v_aux = ifft(h.*fft(g));
 
     v_bar = v_aux;
+    v = v_bar;
     
     % *********************************************************************
     % Update dual variable
