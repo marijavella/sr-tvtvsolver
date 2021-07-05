@@ -245,8 +245,8 @@ for k = 1 : MAX_ITER
     lambda = lambda + rho*r_prim(1:2*n);
     mu = mu + rho*r_prim(2*n+1:3*n);
     
-    s_dual(1:2*n) =  -rho*(D(v_bar  + v_bar_prev)); % dual residual
-    s_dual(2*n+1:3*n) = -rho*(v_bar + v_bar_prev);
+    s_dual(1:2*n) =  -rho*(D(v_bar  - v_bar_prev)); % dual residual
+    s_dual(2*n+1:3*n) = -rho*(v_bar - v_bar_prev);
     % *********************************************************************
     
     % *********************************************************************
